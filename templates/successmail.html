@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div>
+    <h1>Your request has been succesfully mailed to studio owner.</h1>
+    <a href="{% url 'studios' %}">Explore another studios</a>
+</div>
+
+{% endblock %}

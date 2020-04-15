@@ -1,0 +1,87 @@
+<!-- templates/base.html -->
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'musictimeapp/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+  <title>{% block title %}Music Time{% endblock %}</title>
+</head>
+<body>
+  <div class="container-fluid">
+  <header>
+      <nav class="navbar navbar-inverse">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="{% url 'index' %}">Music Time</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  {% if user.is_authenticated %}
+                  <li><a href="{% url 'addstudio' %}">Add Your Studio</a></li>
+                  <li><a href="{% url 'user'  username=request.user.username %}">Profile</a></li>
+                  <li><a href="{% url 'logout' %}">Logout</a></li>
+                  {% else %}
+                  <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                  {% endif %}
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+  </header>
+    {% block content %}
+    {% endblock %}
+  </div>
+
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
+  <script type="text/javascript">
+
+      const addPost = () =>{
+        let obj = {
+          post_body: document.getElementById("compose-post").value
+        }
+
+        let host = window.location.host
+        let url = `http://${host}/musictime/add_post`
+        console.log(url)
+        fetch(url, {
+          method: "POST",
+          body: JSON.stringify(obj),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        .then(res => res.json())
+        .then(result => append_post(result))
+      }
+      const append_post = (obj) => {
+        let element = document.createElement('div')
+        element.innerHTML=`<div class="row"> <div class="col-md-12"> <div class="post-card"> <div class="post-owner"> <img src="{{ user.avatar.url }}" alt="Avatar" class="avatar-sm"> <span class="post-user">{{user.username}}</span> <span class="post-time">few moments ago</span> </div> <div class="post-body">${obj['post_body']}</div> <div class="post-btns"> <button class="btn-post-action">Like</button> <button class="btn-post-action">Share</button> </div> </div> </div> </div>`
+        var prevPost = document.getElementById("append_post");
+        prevPost.insertBefore(element, prevPost.childNodes[0]);
+      }
+  </script>
+</body>
+</html>
+
+

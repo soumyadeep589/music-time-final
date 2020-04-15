@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Studios{% endblock %}
+
+{% block content %}
+<div class="container-fluid studios-main">
+    <h1>Discover & Book Music Studios</h1>
+    <div class="studio-jumbo">
+        <img src="../static/musictimeapp/images/Studio_jumbo03.jpg">
+        <h2 id="jumbo-tag">The largest & most trusted online<br> community to rent music studios.</h2>
+    </div>
+    <div>
+        <h2>Explore Studios</h2>
+        <h4>Find studios nearby, or explore new ones around the world</h4>
+        <div class="studio-container-box">
+            {% for studio in studios %}
+                <div class="single-studio-card">
+                    <img src="{{ studio.studio_image.url }}">
+                    <div>
+                        <h3>{{studio.studio_name}}</h3>
+                        <p>{{studio.price_per_hour}} per hour</p>
+                        <a href="{% url 'studiodetails' id=studio.id%}"><p><button class="button">Details</button></p></a>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

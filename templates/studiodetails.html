@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Studio Details{% endblock %}
+
+{% block content %}
+<div class="container-fluid studios-main">
+    <div class="studiodetails-jumbo">
+        <img src="{{ studio.studio_image.url }}">
+
+    </div>
+    <div class= "details-booking-container">
+        <div class="details-card">
+            <div>
+                <h1>{{studio.studio_name}}</h1>
+                <p>Studio listed by <a href="{% url 'user' username=request.user.username %}">{{studio.studio_owner.username}}</a> : 7 bookings</p>
+
+            </div>
+            <div>
+                <h2>About this studio</h2>
+                <p>{{studio.studio_details}}</p>
+            </div>
+            <div>
+                <h2>Studio Type</h2>
+                <p>{{studio.studio_type}}</p>
+            </div>
+            <div>
+                <h2>Address</h2>
+                <p>{{studio.address}}</p>
+            </div>
+            <div>
+                <h2>Main Equipments</h2>
+                <p>{{studio.equipments}}</p>
+            </div>
+            <div>
+                <h2>Past Clients</h2>
+                <p>{{studio.past_clients}}</p>
+            </div>
+        </div>
+
+        <div class="booking-card">
+            <div>
+                <h1>{{studio.price_per_hour}}</h1><span>per hour</span>
+            </div>
+            <a href="{% url 'sendmail' username=studio.studio_owner.username %}"><button class="btn btn-primary">Request To Book</button></a>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+{% endblock %}

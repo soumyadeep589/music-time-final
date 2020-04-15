@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load utils %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+    <table class="table table-hover">
+        <tr>
+            <h1>User: {{ user.first_name }}</h1>
+            <img src="{{ user.avatar.url }}" class="avatar center-block">
+            {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+            {% if user.last_seen %}
+
+            {% endif %}
+            <p> {{following_count.count}}following, <a href="{% url 'followers' username=user.username %}">{{ followers_count.count }} followers</a>.</p>
+
+            {% if user == request.user %}
+            <p><a href="#">Edit your profile</a></p>
+            {% elif is_following %}
+            <p><a href="{% url 'unfollow' username=user.username %}">Unfollow</a></p>
+
+            {% else %}
+            <p><a href="{% url 'follow' username=user.username %}">Follow</a></p>
+
+            {% endif %}
+
+
+
+
+            </td>
+        </tr>
+    </table>
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+
+
+
+{% endblock %}
+
+

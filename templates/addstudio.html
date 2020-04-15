@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Add Studio{% endblock %}
+
+{% block content %}
+<h2 class="sign-up">Add Your Studio</h2>
+<div class="sign-up-card">
+    <form method="post" enctype="multipart/form-data" action="{% url 'addstudio' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.studio_name|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.studio_details|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.studio_type|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.past_clients|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            <label class="custom-file-label" for="customFile">Upload Studio Pic</label>
+            <input type="file" class="custom-file-input" id="customFile" name="studio_image">
+        </div>
+        <div class="form-group">
+            {{ form.audio_samples|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.equipments|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.address|as_crispy_field }}
+        </div>
+        <div class="form-group">
+            {{ form.price_per_hour|as_crispy_field }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+
+</div>
+
+
+
+{% endblock%}

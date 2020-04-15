@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+<div class="container-fluid index-bg">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="col-md-12 left-panel">
+                <div class="image-cropper">
+                    {% if user.avatar.url != null%}
+                        <a href="#"> <img src="{{ user.avatar.url }}" class="avatar center-block"> </a>
+                    {% else %}
+                        <a href="#"> <img src="" class="avatar center-block"> </a>
+                    {% endif %}
+
+                </div>
+                <p><a href="{% url 'user' username=request.user.username%}">{{request.user.username}}</a></p>
+            </div>
+            <div class="col-md-12 feature-song">
+                    Feature Song
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="row">
+                <div class="col-md-12">
+
+                    <div class="post-card">
+                        <div class="discussion-heading">
+                            <strong><p>Start a discussion</p></strong>
+                        </div>
+                        <textarea class="compose-box" id="compose-post" rows="5">Write Something...</textarea>
+                        <button class="btn-post" onclick="addPost()">Post</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div id = "append_post"></div>
+                {% for post in posts%}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="post-card">
+                                <div class="post-owner">
+                                    <img src="{{ post.author.avatar.url }}" class="avatar-sm">
+                                    <a href="{% url 'user' username=post.author.username%}"><span class="post-user">{{post.author.username}}</span></a>
+                                    <span class="post-time">13 min ago</span>
+                                </div>
+                                <div class="post-body">
+                                    {{post.body}}
+                                </div>
+                                <div class="post-btns">
+                                    <button class="btn-post-action">Like</button>
+                                    <button class="btn-post-action">Share</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="col-md-2">
+            <div class="row">
+                <div>
+                    <h3 class="studio-heading">Studios</h3>
+                </div>
+                <a href="{% url 'studios' %}">
+                    <div class="col-md-12 list-studios">
+                        <div>
+                            <img src="../static/musictimeapp/images/Studio-01.jpg" alt="">
+                        </div>
+                        <div>
+                            <img src="../static/musictimeapp/images/Studio-02.jpeg" alt="">
+                        </div>
+                        <div>
+                            <img src="../static/musictimeapp/images/Studio-03.jpg" alt="">
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 top-songs">
+                    Weekly top songs
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
